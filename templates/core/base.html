@@ -34,59 +34,75 @@
     <link rel="stylesheet" href="{% static 'base/base.css' %}" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid t-p-[1%]">
-        <a class="navbar-brand" href="#">TASTY 2b9</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+    <div class="t-border-solid t-border-2 t-border-[#D8D8D8] ...">
+      <nav class="navbar navbar-expand-lg navbar-light t-bg-[#58FAF4]">
+        <div class="container-fluid">
+          <div class="col">
+            <ul class="nav row">
+              <li class="nav-item col text-end">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="t-absolute t-inset-y-3 t-right-20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  width="30px"
+                  height="30px"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+
+                <a class="fs-6" href="#" style="color: black"> user123</a>
+              </li>
+            </ul>
+            <ul class="nav row t-relative t-inset-y-2">
+              <li class="nav-item col text-center">
+                <div class="t-border-solid hover:t-bg-[#01DFD7]">
+                  <a class="navbar-brand fs-2" href="http://localhost:8000"
+                    >🌟 베스트5</a
+                  >
+                </div>
+              </li>
+              <li class="nav-item col text-center">
+                <div class="t-border-solid hover:t-bg-[#01DFD7]">
+                  <a class="navbar-brand fs-2" href="http://localhost:8000"
+                    >📌 찜
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <nav class="navbar navbar-expand navbar-light t-bg-[#58FAF4]">
+        <div
+          class="container-fluid justify-content-center"
+          style="height: 50px"
         >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <form class="d-flex">
             <input
-              class="form-control me-2"
+              class="form-control"
+              style="width: 200px"
               type="search"
               placeholder="음식점을 입력해주세요"
               aria-label="Search"
             />
-            <button class="btn btn-outline-success" type="submit">검색</button>
+            <button
+              class="t-bg-sky-500 hover:t-bg-sky-400 t-text-white t-font-bold t-py-2 t-px-4 t-border-b-4 t-border-sky-700 hover:t-border-sky-500 t-rounded"
+              type="submit"
+            >
+              검색
+            </button>
           </form>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">로그인</a>
-            </li>
-          </ul>
         </div>
-      </div>
-    </nav>
-    <div>폰트테스트</div>
+      </nav>
+    </div>
+    <div class="text-center">테이스티2b9</div>
     <section class="">{%block content%} {%endblock%}</section>
   </body>
 </html>

@@ -1,16 +1,20 @@
 {% extends "core/base.html" %} {%block content %}
-<div id="map" style="width: 100%; height: 800px"></div>
-<script>
-  var map = new naver.maps.Map("map", {
-    center: new naver.maps.LatLng(37.511875, 127.050206),
-    zoom: 16,
-  });
-  var marker = new naver.maps.Marker({
-    position: new naver.maps.LatLng(37.511875, 127.050206),
-    map: map,
-  });
-  naver.maps.Event.addListener(map, "click", function (e) {
-    marker.setPosition(e.latlng);
-  });
-</script>
+<div class="container-fluid">
+  <div class="t-shadow-inner t-p-[0.5rem]">
+    <div id="map" style="width: 100%; height: 450px"></div>
+    <script>
+      var map = new naver.maps.Map("map", {
+        center: new naver.maps.LatLng(37.511875, 127.050206),
+        zoom: 15,
+      });
+      var marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(37.511875, 127.050206),
+        map: map,
+      });
+      naver.maps.Event.addListener(map, "click", function (e) {
+        marker.setPosition(e.latlng);
+      });
+    </script>
+  </div>
+</div>
 {%endblock%}
