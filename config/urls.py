@@ -16,9 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from restaurants.views import home
 
 urlpatterns = [
+    # admin
     path('admin/', admin.site.urls),
+    # home
+    path('', home, name='home'),
 ]
 
 
