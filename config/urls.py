@@ -31,4 +31,6 @@ if settings.DEBUG:
     urlpatterns += [
         # debug toolbar
         path('__debug__/', include(debug_toolbar.urls)),
+        # utils
+        path('utils', include('utils.urls')),
     ]
