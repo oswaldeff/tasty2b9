@@ -33,7 +33,7 @@ def get_restaurant_lat_lng(address: str):
     naver_geocode_response = eval(requests.get(api_url, headers=headers).content.decode('utf-8'))
     
     content = {
-        'latitude': naver_geocode_response['addresses'][0]['x'],
-        'longitude': naver_geocode_response['addresses'][0]['y']
+        'latitude': naver_geocode_response['addresses'][0]['y'],
+        'longitude': naver_geocode_response['addresses'][0]['x']
     }
     return content

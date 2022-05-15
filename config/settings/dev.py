@@ -1,10 +1,11 @@
 from .base import *
+import os
 
 
 ALLOWED_HOSTS += [
     '127.0.0.1', 
     'localhost',
-    '192.168.35.40',
+    os.environ.get('LOCAL_HOST'),
 ]
 
 

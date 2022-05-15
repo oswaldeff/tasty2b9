@@ -43,7 +43,7 @@ def gen_data(request: HttpRequest):
         radian_longitude_maclaurin = 127.050206 * pi /180
         radian_latitude_restaurant = latitude * pi / 180
         radian_longitude_restaurant = longitude * pi / 180
-        distance = round(abs(6811 - 6378.137 * math.acos(math.cos(radian_latitude_maclaurin)*math.cos(radian_latitude_restaurant)*math.cos(radian_longitude_restaurant-radian_longitude_maclaurin) + math.sin(radian_latitude_maclaurin)*math.sin(radian_latitude_restaurant)))*1000, 1)
+        distance = round(6378.137 * math.acos(math.cos(radian_latitude_maclaurin)*math.cos(radian_latitude_restaurant)*math.cos(radian_longitude_restaurant-radian_longitude_maclaurin) + math.sin(radian_latitude_maclaurin)*math.sin(radian_latitude_restaurant)), 2)
         
         if main_info['main_category'] == '한식':
             main_info['main_category'] = korean_style_food
