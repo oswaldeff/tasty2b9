@@ -1,11 +1,7 @@
-{% extends "core/base.html" %} {%block content %}
-{% load static %}
+{% extends "core/base.html" %} {%block content %} {% load static %}
 <div class="layout">
   <nav class="navbar navbar-expand navbar-light t-bg-[#58FAF4]">
-    <div
-      class="container-fluid justify-content-center"
-      style="height: 50px"
-    >
+    <div class="container-fluid justify-content-center" style="height: 50px">
       <form class="d-flex">
         <input
           class="form-control"
@@ -28,7 +24,6 @@
 <div class="container-fluid">
   <div class="row">
     <ul class="nav row-center t-p-[0.3rem]">
-      
       <li class="nav-item col text-center">
         <a
           class="nav-link fs-6 t-shadow-inner hover:t-bg-[#B3B6B7]"
@@ -37,15 +32,8 @@
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasBottom"
           aria-controls="offcanvasBottom"
-          >🍚한식</a
-        ><div
-        class="offcanvas offcanvas-bottom h-50"
-        tabindex="-1"
-        id="offcanvasBottom"
-        aria-labelledby="offcanvasBottomLabel"
-      >
-        
-        
+          >🍚한식
+        </a>
       </li>
       <li class="nav-item col text-center">
         <a
@@ -55,13 +43,8 @@
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasBottom"
           aria-controls="offcanvasBottom"
-          >🍣일식</a
-        ><div
-        class="offcanvas offcanvas-bottom h-50"
-        tabindex="-1"
-        id="offcanvasBottom"
-        aria-labelledby="offcanvasBottomLabel"
-      >
+          >🍣일식
+        </a>
       </li>
       <li class="nav-item col text-center">
         <a
@@ -71,104 +54,22 @@
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasBottom"
           aria-controls="offcanvasBottom"
-          >🍜중식</a
-        ><div
-        class="offcanvas offcanvas-bottom h-50"
-        tabindex="-1"
-        id="offcanvasBottom"
-        aria-labelledby="offcanvasBottomLabel"
-      >
+          >🍜중식
+        </a>
       </li>
       <li class="nav-item col text-center">
         <a
           class="nav-link fs-6 t-shadow-inner hover:t-bg-[#B3B6B7]"
           onclick="location.href='?category=양식'"
           style="color: black"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasBottom"
-          aria-controls="offcanvasBottom"
-          >🍝양식</a
-        ><div
-        class="offcanvas offcanvas-bottom h-auto"
-        tabindex="-1"
-        id="offcanvasBottom"
-        aria-labelledby="offcanvasBottomLabel"
-      >
+          >🍝양식
+        </a>
       </li>
-      
-      {% if CATEGORY %}
-        <div
-          class="offcanvas offcanvas-bottom h-auto show"
-          data-bs-scroll="true" 
-          data-bs-backdrop="true"
-          tabindex="-1"
-          id="offcanvasBottom"
-          aria-labelledby="offcanvasBottomLabel"
-        >
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title fs-2" id="offcanvasBottomLabel">
-              {% if CATEGORY == '한식' %}
-              🍚{{ CATEGORY }}
-              {% elif CATEGORY == '일식' %}
-              🍣{{ CATEGORY }}
-              {% elif CATEGORY == '중식' %}
-              🍜{{ CATEGORY }}
-              {% elif CATEGORY == '양식' %}
-              🍝{{ CATEGORY }}
-              {% endif %}
-            </h5>
-          </div>
-          <div class="infinite-container">
-          {% if RESTAURANTS %}
-            {% for RESTAURANT in RESTAURANTS %}
-            <div class="infinite-item pt-1 pb-2">
-              <div class="row">
-                <div class="col col-md-auto">
-              <li class="text-left fs-4 ms-3">{{ RESTAURANT.name }}</li>
-              <li class="text-left fs-6 ms-3">02-1234-5678</li>
-              <li class="text-left fs-6 ms-3">⭐ 4.5/5 </li>
-                </div>
-                <div class="col col-lg-2">
-                  <img src="https://cdn.pixabay.com/photo/2014/12/21/23/29/salad-575436_960_720.png" width="80" height="25">
-                </div>
-              </div>
-              <li class="text-left fs-6 ms-3">{{ RESTAURANT.address }}</li>
-            </div>
-            {% endfor %}
-            <div class="row">
-              <div class="col-12 text-center">
-                {% if RESTAURANTS.number != 1 %}
-                <a class="infinite-more-link fs-6 fw-bold" style="color: black" href="?category={{ CATEGORY }}&page={{ RESTAURANTS.previous_page_number }}">prev</a>
-                {% endif %}
-                {% if RESTAURANTS.has_next %}
-                <a class="infinite-more-link fs-6 fw-bold" style="color: black" href="?category={{ CATEGORY }}&page={{ RESTAURANTS.next_page_number }}">next</a>
-                {% endif %}
-              </div>
-            </div>
-          {% endif %}
-          </div>
-        </div>
-      {% endif %}
-      <script src="{% static 'imakewebthings-waypoints/js/jquery.waypoints.min.js' %}"></script>
-      <script src="{% static 'imakewebthings-waypoints/js/infinite.min.js' %}"></script>
-      <script>
-          var infinite = new Waypoint.Infinite({
-              element: $('.infinite-container')[0],
-              offset: 'bottom-in-view',
-              onBeforePageLoad: function () {
-                  $('.loading').show();
-                  $('.infinite-more-link').hide();
-              },
-              onAfterPageLoad: function () {
-                  $('.loading').hide();
-              }
-          });
-      </script>
     </ul>
   </div>
   <div class="container-fluid t-p-[0.6rem]">
     <div class="t-shadow-inner t-p-[0.5rem]">
-      <div id="map" style="width: 100%; height: 300px"></div>
+      <div id="map" style="width: 100%; height: 200px"></div>
       <script type="text/javascript">
         var map = new naver.maps.Map("map", {
           center: new naver.maps.LatLng(37.511875, 127.050206),
@@ -189,5 +90,104 @@
       </script>
     </div>
   </div>
-  {%endblock%}
+  <div>
+    {% if not RESTAURANTS %}
+    <div class="collapse text-center" id="navbarToggleExternalContent">
+      <span class="text-muted fs-6">음식점 검색 혹은</span>
+      <br>
+      <span class="text-muted fs-6">카테고리 선택을 이용해주세요</span>
+    </div>
+    {% endif %}
+    <div class="collapse show" id="navbarToggleExternalContent">
+      <div class="infinite-container">
+        {% if RESTAURANTS %}
+        <ul class="nav justify-content-center t-text-sm t-font-semibold t-border t-rounded-full t-border-solid t-border-2 t-border-sky-500 pt-3">
+          <li class="nav-item">
+            <p class="nav-link active text-center" style="color: #4AA4F5;" aria-current="page" href="#">가까운 순</p>
+          </li>
+          <li class="nav-item">
+            <p class="nav-link disabled text-center" style="color: gray;" href="#">별점 순</p>
+          </li>
+          <li class="nav-item">
+            <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">하트 순</p>
+          </li>
+          <li class="nav-item">
+            <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">가격 순</p>
+          </li>
+        </ul>
+          {% for RESTAURANT in RESTAURANTS %}
+          <div class="t-shadow-inner infinite-item pt-5 pb-2">
+            <div class="row">
+              <div class="col col-md-auto">
+                <li class="text-left fs-4 ms-3">{{ RESTAURANT.name }}</li>
+                <li class="text-left fs-6 ms-3">02-1234-5678</li>
+                <li class="text-left fs-6 ms-3">⭐ 4.5/5</li>
+              </div>
+              <div class="col col-lg-2 p-1.5">
+                <img
+                  src="https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220426_128%2F1650926765070t48sN_JPEG%2Fgse_%25B9%25F6%25B0%25C5_%25B0%25AD%25B3%25B2_%25B8%25C5%25C0%25E5_%25BF%25DC%25B0%25FC_2mb.jpg"
+                  class="rounded float-end img-fluid"
+                />
+              </div>
+            </div>
+            <li class="text-left fs-6 ms-3 pt-2">{{ RESTAURANT.address }}</li>
+          </div>
+          {% endfor %}
+          <div class="row">
+            <div class="col-12 text-center">
+              {% if RESTAURANTS.number != 1 %}
+              <a
+                class="text-md-start infinite-more-link fs-6 fw-bold"
+                style="color: black"
+                href="?category={{ CATEGORY }}&page={{ RESTAURANTS.previous_page_number }}"
+              >
+              < 이전  
+              </a>
+              {% endif %}
+              {% if RESTAURANTS.has_next %}
+              <a
+                class="text-md-end infinite-more-link fs-6 fw-bold"
+                style="color: black"
+                href="?category={{ CATEGORY }}&page={{ RESTAURANTS.next_page_number }}"
+              >
+              다음 > 
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <nav class="navbar navbar-light">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler t-bg-cyan-500 t-shadow-lg t-shadow-cyan-500/50"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarToggleExternalContent"
+          aria-controls="navbarToggleExternalContent"
+          aria-expanded="True"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+  </div>
 </div>
+<script src="{% static 'imakewebthings-waypoints/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'imakewebthings-waypoints/js/infinite.min.js' %}"></script>
+<script>
+  var infinite = new Waypoint.Infinite({
+    element: $(".infinite-container")[0],
+    offset: "bottom-in-view",
+    onBeforePageLoad: function () {
+      $(".loading").show();
+      $(".infinite-more-link").hide();
+    },
+    onAfterPageLoad: function () {
+      $(".loading").hide();
+    },
+  });
+</script>
+{%endblock%}
