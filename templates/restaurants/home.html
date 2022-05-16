@@ -1,7 +1,34 @@
 {% extends "core/base.html" %} {%block content %}
+{% load static %}
+<div class="layout">
+  <nav class="navbar navbar-expand navbar-light t-bg-[#58FAF4]">
+    <div
+      class="container-fluid justify-content-center"
+      style="height: 50px"
+    >
+      <form class="d-flex">
+        <input
+          class="form-control"
+          style="width: 230px"
+          name="search"
+          type="search"
+          placeholder="음식점을 입력해주세요"
+          aria-label="Search"
+        />
+        <button
+          class="t-bg-sky-500 hover:t-bg-sky-400 t-text-white t-font-bold t-py-2 t-px-4 t-border-b-4 t-border-sky-700 hover:t-border-sky-500 t-rounded"
+          type="submit"
+        >
+          검색
+        </button>
+      </form>
+    </div>
+  </nav>
+</div>
 <div class="container-fluid">
   <div class="row">
     <ul class="nav row-center t-p-[0.3rem]">
+      
       <li class="nav-item col text-center">
         <a
           class="nav-link fs-6 t-shadow-inner hover:t-bg-[#B3B6B7]"
@@ -11,36 +38,14 @@
           data-bs-target="#offcanvasBottom"
           aria-controls="offcanvasBottom"
           >🍚한식</a
-        >
-        {% if CATEGORY %}
-        <div
-          class="offcanvas offcanvas-bottom h-50 show"
-          tabindex="-1"
-          id="offcanvasBottom"
-          aria-labelledby="offcanvasBottomLabel"
-        >
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasBottomLabel">
-              Offcanvas bottom {{ CATEGORY }}
-            </h5>
-          </div>
-          <div class="offcanvas-body small">...</div>
-        </div>
-        {% else %}
-        <div
-          class="offcanvas offcanvas-bottom h-50"
-          tabindex="-1"
-          id="offcanvasBottom"
-          aria-labelledby="offcanvasBottomLabel"
-        >
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasBottomLabel">
-              Offcanvas bottom
-            </h5>
-          </div>
-          <div class="offcanvas-body small">...</div>
-        </div>
-        {% endif %}
+        ><div
+        class="offcanvas offcanvas-bottom h-50"
+        tabindex="-1"
+        id="offcanvasBottom"
+        aria-labelledby="offcanvasBottomLabel"
+      >
+        
+        
       </li>
       <li class="nav-item col text-center">
         <a
@@ -51,20 +56,12 @@
           data-bs-target="#offcanvasBottom"
           aria-controls="offcanvasBottom"
           >🍣일식</a
-        >
-        <div
-          class="offcanvas offcanvas-bottom h-50"
-          tabindex="-1"
-          id="offcanvasBottom"
-          aria-labelledby="offcanvasBottomLabel"
-        >
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasBottomLabel">
-              Offcanvas bottom
-            </h5>
-          </div>
-          <div class="offcanvas-body small">...</div>
-        </div>
+        ><div
+        class="offcanvas offcanvas-bottom h-50"
+        tabindex="-1"
+        id="offcanvasBottom"
+        aria-labelledby="offcanvasBottomLabel"
+      >
       </li>
       <li class="nav-item col text-center">
         <a
@@ -75,20 +72,12 @@
           data-bs-target="#offcanvasBottom"
           aria-controls="offcanvasBottom"
           >🍜중식</a
-        >
-        <div
-          class="offcanvas offcanvas-bottom h-50"
-          tabindex="-1"
-          id="offcanvasBottom"
-          aria-labelledby="offcanvasBottomLabel"
-        >
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasBottomLabel">
-              Offcanvas bottom
-            </h5>
-          </div>
-          <div class="offcanvas-body small">...</div>
-        </div>
+        ><div
+        class="offcanvas offcanvas-bottom h-50"
+        tabindex="-1"
+        id="offcanvasBottom"
+        aria-labelledby="offcanvasBottomLabel"
+      >
       </li>
       <li class="nav-item col text-center">
         <a
@@ -99,21 +88,82 @@
           data-bs-target="#offcanvasBottom"
           aria-controls="offcanvasBottom"
           >🍝양식</a
-        >
+        ><div
+        class="offcanvas offcanvas-bottom h-auto"
+        tabindex="-1"
+        id="offcanvasBottom"
+        aria-labelledby="offcanvasBottomLabel"
+      >
+      </li>
+      
+      {% if CATEGORY %}
         <div
-          class="offcanvas offcanvas-bottom h-50"
+          class="offcanvas offcanvas-bottom h-auto show"
+          data-bs-scroll="true" 
+          data-bs-backdrop="true"
           tabindex="-1"
           id="offcanvasBottom"
           aria-labelledby="offcanvasBottomLabel"
         >
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasBottomLabel">
-              Offcanvas bottom
+            <h5 class="offcanvas-title fs-2" id="offcanvasBottomLabel">
+              {% if CATEGORY == '한식' %}
+              🍚{{ CATEGORY }}
+              {% elif CATEGORY == '일식' %}
+              🍣{{ CATEGORY }}
+              {% elif CATEGORY == '중식' %}
+              🍜{{ CATEGORY }}
+              {% elif CATEGORY == '양식' %}
+              🍝{{ CATEGORY }}
+              {% endif %}
             </h5>
           </div>
-          <div class="offcanvas-body small">...</div>
+          <div class="infinite-container">
+          {% if RESTAURANTS %}
+            {% for RESTAURANT in RESTAURANTS %}
+            <div class="infinite-item pt-1 pb-2">
+              <div class="row">
+                <div class="col col-md-auto">
+              <li class="text-left fs-4 ms-3">{{ RESTAURANT.name }}</li>
+              <li class="text-left fs-6 ms-3">02-1234-5678</li>
+              <li class="text-left fs-6 ms-3">⭐ 4.5/5 </li>
+                </div>
+                <div class="col col-lg-2">
+                  <img src="https://cdn.pixabay.com/photo/2014/12/21/23/29/salad-575436_960_720.png" width="80" height="25">
+                </div>
+              </div>
+              <li class="text-left fs-6 ms-3">{{ RESTAURANT.address }}</li>
+            </div>
+            {% endfor %}
+            <div class="row">
+              <div class="col-12 text-center">
+                {% if RESTAURANTS.number != 1 %}
+                <a class="infinite-more-link fs-6 fw-bold" style="color: black" href="?category={{ CATEGORY }}&page={{ RESTAURANTS.previous_page_number }}">prev</a>
+                {% endif %}
+                {% if RESTAURANTS.has_next %}
+                <a class="infinite-more-link fs-6 fw-bold" style="color: black" href="?category={{ CATEGORY }}&page={{ RESTAURANTS.next_page_number }}">next</a>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+          </div>
         </div>
-      </li>
+      {% endif %}
+      <script src="{% static 'imakewebthings-waypoints/js/jquery.waypoints.min.js' %}"></script>
+      <script src="{% static 'imakewebthings-waypoints/js/infinite.min.js' %}"></script>
+      <script>
+          var infinite = new Waypoint.Infinite({
+              element: $('.infinite-container')[0],
+              offset: 'bottom-in-view',
+              onBeforePageLoad: function () {
+                  $('.loading').show();
+                  $('.infinite-more-link').hide();
+              },
+              onAfterPageLoad: function () {
+                  $('.loading').hide();
+              }
+          });
+      </script>
     </ul>
   </div>
   <div class="container-fluid t-p-[0.6rem]">
@@ -128,7 +178,6 @@
           position: new naver.maps.LatLng(37.511875, 127.050206),
           map: map,
         });
-        {% if RESTAURANTS %}
         {% for RESTAURANT in RESTAURANTS %}
         var lat = {{ RESTAURANT.latitude }}
         var lng = {{ RESTAURANT.longitude }}
@@ -137,7 +186,6 @@
           map: map,
         });
         {% endfor %}
-        {% endif %}
       </script>
     </div>
   </div>
