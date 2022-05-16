@@ -29,17 +29,20 @@ def home(request: HttpRequest):
         search_keyword = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', search_keyword)
         
         page = request.GET.get('page', '1')
+        q.add(Q(sub_category__icontains=search_keyword), q.OR)
+        q.add(Q(name__icontains=search_keyword), q.OR)
         queryset = Restaurant \
             .objects \
-            .filter(sub_category__icontains=search_keyword) \
+            .filter(q) \
             .order_by('distance')
+        
         paginator = Paginator(queryset, 5)
-        queryset = paginator.get_page(page)
+        restaurants = paginator.get_page(page)
         
         context.update({
             'SEARCH_KEYWORD': search_keyword,
             'PAGE': page,
-            'RESTAURANTS': queryset
+            'RESTAURANTS': restaurants
         })
     
     if request.GET.get('category', ''):
@@ -52,12 +55,12 @@ def home(request: HttpRequest):
             .filter(main_category__name=category) \
             .order_by('distance')
         paginator = Paginator(queryset, 5)
-        queryset = paginator.get_page(page)
+        restaurants = paginator.get_page(page)
         
         context.update({
             'CATEGORY': category,
             'PAGE': page,
-            'RESTAURANTS': queryset
+            'RESTAURANTS': restaurants
         })
     
     return render(request, template_name, context)
