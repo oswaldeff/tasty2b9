@@ -177,6 +177,8 @@
             {% endif %}
             </div>
           </div>
+        {% elif not RESTAURANTS and SEARCH_KEYWORD %}
+        <p class="text-center fs-6">검색어에 해당하는 음식점이 없습니다🥲</p>
         {% endif %}
       </div>
     </div>

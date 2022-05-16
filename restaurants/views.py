@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.http import HttpRequest
 from django.core.paginator import Paginator
+from django.core.exceptions import ObjectDoesNotExist
 from .models import MainCategory, Restaurant
 import os
 import re
@@ -17,8 +18,7 @@ def home(request: HttpRequest):
         'LOCAL_HOST': os.environ.get('LOCAL_HOST'),
         'SECTION': 'home',
         'AUTH': False,
-        'CATEGORY': False,
-        'SEARCH_KEYWORD': False,
+        'PAGE': 1,
         'ORDER_BY': False
     }
     q = Q()
@@ -35,13 +35,12 @@ def home(request: HttpRequest):
             .objects \
             .filter(q) \
             .order_by('distance')
-        
         paginator = Paginator(queryset, 5)
         restaurants = paginator.get_page(page)
         
         context.update({
-            'SEARCH_KEYWORD': search_keyword,
             'PAGE': page,
+            'SEARCH_KEYWORD': search_keyword,
             'RESTAURANTS': restaurants
         })
     
@@ -49,17 +48,18 @@ def home(request: HttpRequest):
         category = request.GET.get('category', '')
         
         page = request.GET.get('page', '1')
+        q.add(Q(main_category__name=category), q.AND)
         queryset = Restaurant \
             .objects \
             .select_related('main_category') \
-            .filter(main_category__name=category) \
+            .filter(q) \
             .order_by('distance')
         paginator = Paginator(queryset, 5)
         restaurants = paginator.get_page(page)
         
         context.update({
-            'CATEGORY': category,
             'PAGE': page,
+            'CATEGORY': category,
             'RESTAURANTS': restaurants
         })
     
