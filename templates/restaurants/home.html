@@ -135,6 +135,7 @@
           {% endfor %}
           <div class="row">
             <div class="col-12 text-center">
+            {% if CATEGORY %}
               {% if RESTAURANTS.number != 1 %}
               <a
                 class="text-md-start infinite-more-link fs-6 fw-bold"
@@ -153,6 +154,27 @@
               다음 > 
               </a>
               {% endif %}
+            {% endif %}
+            {% if SEARCH_KEYWORD %}
+              {% if RESTAURANTS.number != 1 %}
+              <a
+                class="text-md-start infinite-more-link fs-6 fw-bold"
+                style="color: black"
+                href="?search={{ SEARCH_KEYWORD }}&page={{ RESTAURANTS.previous_page_number }}"
+              >
+              < 이전  
+              </a>
+              {% endif %}
+              {% if RESTAURANTS.has_next %}
+              <a
+                class="text-md-end infinite-more-link fs-6 fw-bold"
+                style="color: black"
+                href="?search={{ SEARCH_KEYWORD }}&page={{ RESTAURANTS.next_page_number }}"
+              >
+              다음 > 
+              </a>
+              {% endif %}
+            {% endif %}
             </div>
           </div>
         {% endif %}
