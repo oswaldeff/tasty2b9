@@ -17,7 +17,7 @@ def home(request: HttpRequest):
         'NAVER_MAP_CLIENT_ID': os.environ.get('NAVER_MAP_CLIENT_ID'),
         'LOCAL_HOST': os.environ.get('LOCAL_HOST'),
         'SECTION': 'home',
-        'AUTH': False,
+        'IS_AUTH': True,
         'PAGE': 1,
         'ORDER_BY': False
     }
