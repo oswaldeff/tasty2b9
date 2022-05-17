@@ -3,8 +3,11 @@ from .scraper import get_restaurant_main_info
 from .naver_api import get_restaurant_sub_info, get_restaurant_lat_lng
 from restaurants.models import MainCategory, Restaurant
 import math
+import random
+import pprint
 
 
+# generate restaurant data
 def gen_data(request: HttpRequest):
     MainCategory.objects.bulk_create([
         MainCategory(name='한식'),
@@ -65,4 +68,13 @@ def gen_data(request: HttpRequest):
         restaurant_databases.append(restaurant_database)
     
     Restaurant.objects.bulk_create([Restaurant(**data) for data in restaurant_databases], ignore_conflicts=True)
+    return HttpResponse(status=200)
+
+
+# update restaurant star 
+def update_data(request: HttpRequest):
+    for restaurant_object in Restaurant.objects.all():
+        dummy_data = round(random.uniform(3.0, 4.7), 1)
+        restaurant_object.naver_rating = dummy_data
+        restaurant_object.save()
     return HttpResponse(status=200)

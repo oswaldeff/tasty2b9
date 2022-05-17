@@ -102,18 +102,30 @@
       <div class="infinite-container">
         {% if RESTAURANTS %}
           {% if CATEGORY %}
-          <ul class="nav justify-content-center t-text-sm t-font-semibold t-border t-rounded-full t-border-solid t-border-2 t-border-sky-500 pt-3">
+          <ul class="nav nav-pills justify-content-center t-text-sm t-font-semibold t-border t-rounded-full t-border-solid t-border-2 t-border-sky-500 pt-3">
+            {% if SORT == 'distance' %}
             <li class="nav-item">
-              <p class="nav-link active text-center" onclick="location.href='?category={{ CATEGORY }}&sort=거리'" style="color: #4AA4F5;" aria-current="page" href="#">가까운 순</p>
+              <p class="nav-link active text-center" onclick="location.href='?category={{ CATEGORY }}&sort=거리'" style="color: white;">거리순</p>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <p class="nav-link text-center" onclick="location.href='?category={{ CATEGORY }}&sort=거리'" style="color: gray;">거리순</p>
+            </li>
+            {% endif %}
+            {% if SORT == '-naver_rating' %}
+            <li class="nav-item">
+              <p class="nav-link active text-center" onclick="location.href='?category={{ CATEGORY }}&sort=별점'" style="color: white;" href="#">별점순</p>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <p class="nav-link text-center" onclick="location.href='?category={{ CATEGORY }}&sort=별점'" style="color: gray;">별점순</p>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <p class="nav-link disabled text-center" style="color: gray;" href="#">좋아요순</p>
             </li>
             <li class="nav-item">
-              <p class="nav-link disabled text-center" style="color: gray;" href="#">별점 순</p>
-            </li>
-            <li class="nav-item">
-              <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">하트 순</p>
-            </li>
-            <li class="nav-item">
-              <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">가격 순</p>
+              <p class="nav-link disabled text-center" style="color: gray;" href="#">가격순</p>
             </li>
           </ul>
           {% endif %}
@@ -123,13 +135,13 @@
               <p class="nav-link active text-center" onclick="location.href='?search={{ SEARCH_KEYWORD }}&sort=거리'" style="color: #4AA4F5;" aria-current="page" href="#">가까운 순</p>
             </li>
             <li class="nav-item">
-              <p class="nav-link disabled text-center" style="color: gray;" href="#">별점 순</p>
+              <p class="nav-link disabled text-center" style="color: gray;" href="#">별점 높은순</p>
             </li>
             <li class="nav-item">
-              <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">하트 순</p>
+              <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">하트 많은순</p>
             </li>
             <li class="nav-item">
-              <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">가격 순</p>
+              <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">가격 낮은순</p>
             </li>
           </ul>
           {% endif %}
@@ -139,7 +151,7 @@
               <div class="col col-md-auto">
                 <li class="text-left fs-4 ms-3">{{ RESTAURANT.name }}</li>
                 <li class="text-left fs-6 ms-3">02-1234-5678</li>
-                <li class="text-left fs-6 ms-3">⭐ 4.5/5</li>
+                <li class="text-left fs-6 ms-3">⭐ {{ RESTAURANT.naver_rating }}/5</li>
               </div>
               <div class="col col-lg-2 p-1.5">
                 <img
@@ -153,44 +165,87 @@
           {% endfor %}
           <div class="row">
             <div class="col-12 text-center">
-            {% if CATEGORY %}
-              {% if RESTAURANTS.number != 1 %}
-              <a
-                class="text-md-start infinite-more-link fs-6 fw-bold"
-                style="color: black"
-                href="?category={{ CATEGORY }}&page={{ RESTAURANTS.previous_page_number }}"
-              >
-              < 이전  
-              </a>
+            {% if SORT == 'distance' %}
+              {% if CATEGORY %}
+                {% if RESTAURANTS.number != 1 %}
+                <a
+                  class="text-md-start infinite-more-link fs-6 fw-bold"
+                  style="color: black"
+                  href="?category={{ CATEGORY }}&sort=거리&page={{ RESTAURANTS.previous_page_number }}"
+                >
+                < 이전  
+                </a>
+                {% endif %}
+                {% if RESTAURANTS.has_next %}
+                <a
+                  class="text-md-end infinite-more-link fs-6 fw-bold"
+                  style="color: black"
+                  href="?category={{ CATEGORY }}&sort=거리&page={{ RESTAURANTS.next_page_number }}"
+                >
+                다음 > 
+                </a>
+                {% endif %}
               {% endif %}
-              {% if RESTAURANTS.has_next %}
-              <a
-                class="text-md-end infinite-more-link fs-6 fw-bold"
-                style="color: black"
-                href="?category={{ CATEGORY }}&page={{ RESTAURANTS.next_page_number }}"
-              >
-              다음 > 
-              </a>
+              {% if SEARCH_KEYWORD %}
+                {% if RESTAURANTS.number != 1 %}
+                <a
+                  class="text-md-start infinite-more-link fs-6 fw-bold"
+                  style="color: black"
+                  href="?search={{ SEARCH_KEYWORD }}&sort=거리&page={{ RESTAURANTS.previous_page_number }}"
+                >
+                < 이전  
+                </a>
+                {% endif %}
+                {% if RESTAURANTS.has_next %}
+                <a
+                  class="text-md-end infinite-more-link fs-6 fw-bold"
+                  style="color: black"
+                  href="?search={{ SEARCH_KEYWORD }}&sort=거리&page={{ RESTAURANTS.next_page_number }}"
+                >
+                다음 > 
+                </a>
+                {% endif %}
               {% endif %}
-            {% endif %}
-            {% if SEARCH_KEYWORD %}
-              {% if RESTAURANTS.number != 1 %}
-              <a
-                class="text-md-start infinite-more-link fs-6 fw-bold"
-                style="color: black"
-                href="?search={{ SEARCH_KEYWORD }}&page={{ RESTAURANTS.previous_page_number }}"
-              >
-              < 이전  
-              </a>
+            {% elif SORT == '-naver_rating' %}
+              {% if CATEGORY %}
+                {% if RESTAURANTS.number != 1 %}
+                <a
+                  class="text-md-start infinite-more-link fs-6 fw-bold"
+                  style="color: black"
+                  href="?category={{ CATEGORY }}&sort=별점&page={{ RESTAURANTS.previous_page_number }}"
+                >
+                < 이전  
+                </a>
+                {% endif %}
+                {% if RESTAURANTS.has_next %}
+                <a
+                  class="text-md-end infinite-more-link fs-6 fw-bold"
+                  style="color: black"
+                  href="?category={{ CATEGORY }}&sort=별점&page={{ RESTAURANTS.next_page_number }}"
+                >
+                다음 > 
+                </a>
+                {% endif %}
               {% endif %}
-              {% if RESTAURANTS.has_next %}
-              <a
-                class="text-md-end infinite-more-link fs-6 fw-bold"
-                style="color: black"
-                href="?search={{ SEARCH_KEYWORD }}&page={{ RESTAURANTS.next_page_number }}"
-              >
-              다음 > 
-              </a>
+              {% if SEARCH_KEYWORD %}
+                {% if RESTAURANTS.number != 1 %}
+                <a
+                  class="text-md-start infinite-more-link fs-6 fw-bold"
+                  style="color: black"
+                  href="?search={{ SEARCH_KEYWORD }}&sort=별점&page={{ RESTAURANTS.previous_page_number }}"
+                >
+                < 이전  
+                </a>
+                {% endif %}
+                {% if RESTAURANTS.has_next %}
+                <a
+                  class="text-md-end infinite-more-link fs-6 fw-bold"
+                  style="color: black"
+                  href="?search={{ SEARCH_KEYWORD }}&sort=별점&page={{ RESTAURANTS.next_page_number }}"
+                >
+                다음 > 
+                </a>
+                {% endif %}
               {% endif %}
             {% endif %}
             </div>

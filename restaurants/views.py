@@ -18,9 +18,21 @@ def home(request: HttpRequest):
         'SECTION': 'home',
         'IS_AUTH': False,
         'PAGE': 1,
-        'SORT': True
+        'SORT': 'distance'
     }
     q = Q()
+    
+    if request.GET.get('sort', ''):
+        sort = request.GET.get('sort', '')
+        sort_set = {
+            '거리': 'distance',
+            '별점': '-naver_rating',
+            '좋아요': None,
+            '가격': None
+        }
+        context.update({
+            'SORT': sort_set[sort]
+        })
     
     if request.GET.get('search', ''):
         search_keyword = request.GET.get('search', '')
@@ -33,7 +45,7 @@ def home(request: HttpRequest):
         queryset = Restaurant \
             .objects \
             .filter(q) \
-            .order_by('distance')
+            .order_by(context['SORT'])
         paginator = Paginator(queryset, 5)
         restaurants = paginator.get_page(page)
         
@@ -52,7 +64,7 @@ def home(request: HttpRequest):
             .objects \
             .select_related('main_category') \
             .filter(q) \
-            .order_by('distance')
+            .order_by(context['SORT'])
         paginator = Paginator(queryset, 5)
         restaurants = paginator.get_page(page)
         
