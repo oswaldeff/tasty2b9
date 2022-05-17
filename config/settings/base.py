@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # project apps
     'core',
     'restaurants',
+    'accounts',
 ]
 
 MIDDLEWARE = [
