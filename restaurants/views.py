@@ -2,8 +2,7 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.http import HttpRequest
 from django.core.paginator import Paginator
-from django.core.exceptions import ObjectDoesNotExist
-from .models import MainCategory, Restaurant
+from .models import Restaurant
 import os
 import re
 
@@ -17,9 +16,9 @@ def home(request: HttpRequest):
         'NAVER_MAP_CLIENT_ID': os.environ.get('NAVER_MAP_CLIENT_ID'),
         'LOCAL_HOST': os.environ.get('LOCAL_HOST'),
         'SECTION': 'home',
-        'IS_AUTH': True,
+        'IS_AUTH': False,
         'PAGE': 1,
-        'ORDER_BY': False
+        'SORT': True
     }
     q = Q()
     

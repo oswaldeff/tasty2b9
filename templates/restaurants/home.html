@@ -101,20 +101,38 @@
     <div class="collapse show" id="navbarToggleExternalContent">
       <div class="infinite-container">
         {% if RESTAURANTS %}
-        <ul class="nav justify-content-center t-text-sm t-font-semibold t-border t-rounded-full t-border-solid t-border-2 t-border-sky-500 pt-3">
-          <li class="nav-item">
-            <p class="nav-link active text-center" style="color: #4AA4F5;" aria-current="page" href="#">가까운 순</p>
-          </li>
-          <li class="nav-item">
-            <p class="nav-link disabled text-center" style="color: gray;" href="#">별점 순</p>
-          </li>
-          <li class="nav-item">
-            <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">하트 순</p>
-          </li>
-          <li class="nav-item">
-            <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">가격 순</p>
-          </li>
-        </ul>
+          {% if CATEGORY %}
+          <ul class="nav justify-content-center t-text-sm t-font-semibold t-border t-rounded-full t-border-solid t-border-2 t-border-sky-500 pt-3">
+            <li class="nav-item">
+              <p class="nav-link active text-center" onclick="location.href='?category={{ CATEGORY }}&sort=거리'" style="color: #4AA4F5;" aria-current="page" href="#">가까운 순</p>
+            </li>
+            <li class="nav-item">
+              <p class="nav-link disabled text-center" style="color: gray;" href="#">별점 순</p>
+            </li>
+            <li class="nav-item">
+              <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">하트 순</p>
+            </li>
+            <li class="nav-item">
+              <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">가격 순</p>
+            </li>
+          </ul>
+          {% endif %}
+          {% if SEARCH_KEYWORD %}
+          <ul class="nav justify-content-center t-text-sm t-font-semibold t-border t-rounded-full t-border-solid t-border-2 t-border-sky-500 pt-3">
+            <li class="nav-item">
+              <p class="nav-link active text-center" onclick="location.href='?search={{ SEARCH_KEYWORD }}&sort=거리'" style="color: #4AA4F5;" aria-current="page" href="#">가까운 순</p>
+            </li>
+            <li class="nav-item">
+              <p class="nav-link disabled text-center" style="color: gray;" href="#">별점 순</p>
+            </li>
+            <li class="nav-item">
+              <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">하트 순</p>
+            </li>
+            <li class="nav-item">
+              <p class="nav-link disabled text-center" href="#" tabindex="-1" aria-disabled="true">가격 순</p>
+            </li>
+          </ul>
+          {% endif %}
           {% for RESTAURANT in RESTAURANTS %}
           <div class="t-shadow-inner infinite-item pt-5 pb-2">
             <div class="row">
