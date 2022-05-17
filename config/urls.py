@@ -21,8 +21,10 @@ from restaurants.views import home
 urlpatterns = [
     # admin
     path('admin/', admin.site.urls),
-    # home
-    path('', home, name='home'),
+    # core
+    path('', include('core.urls'), name='core'),
+    # restaurants
+    path('restaurants/', include('restaurants.urls'), name='restaurants'),
 ]
 
 
