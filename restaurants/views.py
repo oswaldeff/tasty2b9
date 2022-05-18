@@ -114,7 +114,7 @@ def restaurant_detail(request: HttpRequest, restaurant_id):
     
     page = request.GET.get('page', '1')
     restaurant = Restaurant.objects.get(id=restaurant_id)
-    queryset = Menu.objects.filter(restaurant=restaurant)
+    queryset = Menu.objects.filter(restaurant=restaurant).order_by('id')
     paginator = Paginator(queryset, 5)
     menu = paginator.get_page(page)
     context.update({
