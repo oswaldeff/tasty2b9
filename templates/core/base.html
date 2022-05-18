@@ -34,6 +34,22 @@
     />
   </head>
   <body>
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            로그아웃하시겠습니까?
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-info" role="button" href="{% url 'accounts:logout' %}">로그아웃</a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="layout">
       <nav class="navbar py-0 navbar-expand-lg navbar-light t-bg-[#58FAF4]">
         <div class="container-fluid">
@@ -178,7 +194,8 @@
               {% if user.is_authenticated %}
               <a
                 class="nav-link"
-                href="{% url 'accounts:logout' %}"
+                data-bs-target="#logoutModal"
+                data-bs-toggle="modal"
                 style="color: black"
                 >
                 <svg
