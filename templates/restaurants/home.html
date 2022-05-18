@@ -1,4 +1,4 @@
-{% extends "core/base.html" %} {%block content %} {% load static %}
+{% extends "core/base.html" %} {%block content %} {% load static %} {% load bootstrap5 %}
 <div class="layout">
   <nav class="navbar navbar-expand navbar-light t-bg-[#2AC1BC]">
     <div class="container-fluid justify-content-center" style="height: 50px">
@@ -114,7 +114,7 @@
             {% endif %}
             {% if SORT == '-naver_rating' %}
             <li class="nav-item">
-              <p class="nav-link active text-center" onclick="location.href='?category={{ CATEGORY }}&sort=별점'" style="color: white;" href="#">별점순</p>
+              <p class="nav-link active text-center" onclick="location.href='?category={{ CATEGORY }}&sort=별점'" style="color: white;">별점순</p>
             </li>
             {% else %}
             <li class="nav-item">
@@ -124,9 +124,15 @@
             <li class="nav-item">
               <p class="nav-link disabled text-center" style="color: gray;" href="#">좋아요순</p>
             </li>
+            {% if SORT == 'min_price' %}
             <li class="nav-item">
-              <p class="nav-link disabled text-center" style="color: gray;" href="#">가격순</p>
+              <p class="nav-link active text-center" onclick="location.href='?category={{ CATEGORY }}&sort=가격'" style="color: white;">가격순</p>
             </li>
+            {% else %}
+            <li class="nav-item">
+              <p class="nav-link text-center" onclick="location.href='?category={{ CATEGORY }}&sort=가격'" style="color: gray;">가격순</p>
+            </li>
+            {% endif %}
           </ul>
           {% endif %}
           {% if SEARCH_KEYWORD %}
@@ -142,7 +148,7 @@
             {% endif %}
             {% if SORT == '-naver_rating' %}
             <li class="nav-item">
-              <p class="nav-link active text-center" onclick="location.href='?search={{ SEARCH_KEYWORD }}&sort=별점'" style="color: white;" href="#">별점순</p>
+              <p class="nav-link active text-center" onclick="location.href='?search={{ SEARCH_KEYWORD }}&sort=별점'" style="color: white;">별점순</p>
             </li>
             {% else %}
             <li class="nav-item">
@@ -152,15 +158,21 @@
             <li class="nav-item">
               <p class="nav-link disabled text-center" style="color: gray;" href="#">좋아요순</p>
             </li>
+            {% if SORT == 'min_price' %}
             <li class="nav-item">
-              <p class="nav-link disabled text-center" style="color: gray;" href="#">가격순</p>
+              <p class="nav-link active text-center" onclick="location.href='?search={{ SEARCH_KEYWORD }}&sort=가격'" style="color: white;">가격순</p>
             </li>
+            {% else %}
+            <li class="nav-item">
+              <p class="nav-link text-center" onclick="location.href='?search={{ SEARCH_KEYWORD }}&sort=가격'" style="color: gray;">가격순</p>
+            </li>
+            {% endif %}
           </ul>
           {% endif %}
           {% for RESTAURANT in RESTAURANTS %}
           <div class="t-shadow-inner infinite-item pt-5 pb-2">
             <div class="row">
-              <div class="col col-md-auto">
+              <div class="col col-md-auto" onclick="location.href='detail/{{ RESTAURANT }}'">
                 <li class="text-left fs-4 ms-3">{{ RESTAURANT.name }}</li>
                 <li class="text-left fs-6 ms-3">02-1234-5678</li>
                 <li class="text-left fs-6 ms-3">⭐ {{ RESTAURANT.naver_rating }}/5</li>
@@ -254,6 +266,47 @@
                   class="text-md-end infinite-more-link fs-6 fw-bold"
                   style="color: black"
                   href="?search={{ SEARCH_KEYWORD }}&sort=별점&page={{ RESTAURANTS.next_page_number }}"
+                >
+                다음 > 
+                </a>
+                {% endif %}
+              {% endif %}
+            {% elif SORT == 'min_price' %}
+              {% if CATEGORY %}
+                {% if RESTAURANTS.number != 1 %}
+                <a
+                  class="text-md-start infinite-more-link fs-6 fw-bold"
+                  style="color: black"
+                  href="?category={{ CATEGORY }}&sort=가격&page={{ RESTAURANTS.previous_page_number }}"
+                >
+                < 이전  
+                </a>
+                {% endif %}
+                {% if RESTAURANTS.has_next %}
+                <a
+                  class="text-md-end infinite-more-link fs-6 fw-bold"
+                  style="color: black"
+                  href="?category={{ CATEGORY }}&sort=가격&page={{ RESTAURANTS.next_page_number }}"
+                >
+                다음 > 
+                </a>
+                {% endif %}
+              {% endif %}
+              {% if SEARCH_KEYWORD %}
+                {% if RESTAURANTS.number != 1 %}
+                <a
+                  class="text-md-start infinite-more-link fs-6 fw-bold"
+                  style="color: black"
+                  href="?search={{ SEARCH_KEYWORD }}&sort=가격&page={{ RESTAURANTS.previous_page_number }}"
+                >
+                < 이전  
+                </a>
+                {% endif %}
+                {% if RESTAURANTS.has_next %}
+                <a
+                  class="text-md-end infinite-more-link fs-6 fw-bold"
+                  style="color: black"
+                  href="?search={{ SEARCH_KEYWORD }}&sort=가격&page={{ RESTAURANTS.next_page_number }}"
                 >
                 다음 > 
                 </a>

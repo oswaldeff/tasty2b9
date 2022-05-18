@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from django.db.models import Q
+from django.db.models import Q, OuterRef, Subquery
 from django.http import HttpRequest
 from django.core.paginator import Paginator
-from .models import Restaurant
+from django.views.generic.detail import DetailView
+from .models import Restaurant, Menu
 import os
 import re
 
@@ -10,16 +11,22 @@ import re
 # Create your views here.
 
 
-def home(request: HttpRequest):
-    template_name = 'restaurants/home.html'
+def get_context():
     context = {
         'NAVER_MAP_CLIENT_ID': os.environ.get('NAVER_MAP_CLIENT_ID'),
         'LOCAL_HOST': os.environ.get('LOCAL_HOST'),
         'SECTION': 'home',
-        'IS_AUTH': False,
-        'PAGE': 1,
-        'SORT': 'distance'
+        'PAGE': 1
     }
+    return context
+
+
+def home(request: HttpRequest):
+    template_name = 'restaurants/home.html'
+    context = get_context()
+    context.update({
+        'SORT': 'distance'
+    })
     q = Q()
     
     if request.GET.get('sort', ''):
@@ -28,7 +35,7 @@ def home(request: HttpRequest):
             '거리': 'distance',
             '별점': '-naver_rating',
             '좋아요': None,
-            '가격': None
+            '가격': 'min_price'
         }
         context.update({
             'SORT': sort_set[sort]
@@ -42,10 +49,22 @@ def home(request: HttpRequest):
         page = request.GET.get('page', '1')
         q.add(Q(sub_category__icontains=search_keyword), q.OR)
         q.add(Q(name__icontains=search_keyword), q.OR)
-        queryset = Restaurant \
-            .objects \
-            .filter(q) \
-            .order_by(context['SORT'])
+        
+        if context['SORT'] == 'min_price':
+            sub_queryset = Menu \
+                .objects \
+                .filter(restaurant=OuterRef('id')) \
+                .order_by('price')
+            queryset = Restaurant \
+                .objects \
+                .filter(q) \
+                .annotate(min_price=Subquery(sub_queryset.values('price')[:1])) \
+                .order_by(context['SORT'])
+        else:
+            queryset = Restaurant \
+                .objects \
+                .filter(q) \
+                .order_by(context['SORT'])
         paginator = Paginator(queryset, 5)
         restaurants = paginator.get_page(page)
         
@@ -60,11 +79,23 @@ def home(request: HttpRequest):
         
         page = request.GET.get('page', '1')
         q.add(Q(main_category__name=category), q.AND)
-        queryset = Restaurant \
-            .objects \
-            .select_related('main_category') \
-            .filter(q) \
-            .order_by(context['SORT'])
+        if context['SORT'] == 'min_price':
+            sub_queryset = Menu \
+                .objects \
+                .filter(restaurant=OuterRef('id')) \
+                .order_by('price')
+            queryset = Restaurant \
+                .objects \
+                .select_related('main_category') \
+                .filter(q) \
+                .annotate(min_price=Subquery(sub_queryset.values('price')[:1])) \
+                .order_by(context['SORT'])
+        else:
+            queryset = Restaurant \
+                .objects \
+                .select_related('main_category') \
+                .filter(q) \
+                .order_by(context['SORT'])
         paginator = Paginator(queryset, 5)
         restaurants = paginator.get_page(page)
         
@@ -73,5 +104,22 @@ def home(request: HttpRequest):
             'CATEGORY': category,
             'RESTAURANTS': restaurants
         })
+    
+    return render(request, template_name, context)
+
+
+def restaurant_detail(request: HttpRequest, restaurant_id):
+    template_name = 'restaurants/detail.html'
+    context = get_context()
+    
+    page = request.GET.get('page', '1')
+    restaurant = Restaurant.objects.get(id=restaurant_id)
+    queryset = Menu.objects.filter(restaurant=restaurant)
+    paginator = Paginator(queryset, 5)
+    menu = paginator.get_page(page)
+    context.update({
+        'RESTAURANT': restaurant,
+        'MENU': menu
+    })
     
     return render(request, template_name, context)
