@@ -14,6 +14,14 @@ RUN pip3 install gunicorn
 
 WORKDIR /var/www/tasty2b9
 
+RUN apt update
+
+RUN apt install npm
+
+RUN npm install
+
+RUN npm run css
+
 EXPOSE 8000
 
 CMD ["gunicorn", "config.wsgi", "--bind", "0.0.0.0:8000"]
