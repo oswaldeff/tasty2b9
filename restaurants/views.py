@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.db.models import Q, OuterRef, Subquery
 from django.http import HttpRequest
 from django.core.paginator import Paginator
-from django.views.generic.detail import DetailView
 from .models import Restaurant, Menu
 import os
 import re
