@@ -1,4 +1,6 @@
 from .base import *
+import pymysql
+import os
 
 
 DEBUG = False
@@ -9,6 +11,9 @@ ALLOWED_HOSTS += [
 ]
 
 
+# pymysql setting
+pymysql.version_info = (1, 4, 2, "final", 0)
+pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.mysql',
