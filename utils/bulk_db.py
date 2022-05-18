@@ -104,10 +104,8 @@ def update_restaurant_data(request: HttpRequest):
         
         url = f'https://map.naver.com/v5/api/search?caller=pcweb&query=강남%20{restaurant.name}'
         try:
-            print('present: ', i, restaurant.name)
             response = requests.get(url, headers=header)
             content_json = json.loads(response.content)['result']['place']['list'][0]
-            time.sleep(1)
             thum_url = content_json['thumUrl']
             restaurant.img = thum_url
             restaurant.save()
