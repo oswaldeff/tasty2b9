@@ -6,7 +6,6 @@
         <form action="{% url 'accounts:login' %}" method="post" class="login-form">
             {% csrf_token %}
             {% bootstrap_form form %}
-            <br>
             <div class="row">
                 <div class="col">
                     {% buttons %}
