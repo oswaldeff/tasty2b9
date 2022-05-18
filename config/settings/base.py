@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # thirdparty apps
     'debug_toolbar',
+    'bootstrap5',
     # project apps
     'core',
     'restaurants',
@@ -148,3 +149,7 @@ APPEND_SLASH = False
 
 # override auth user model
 AUTH_USER_MODEL = 'accounts.User'
+
+
+# login redirect
+LOGIN_REDIRECT_URL = '/'
