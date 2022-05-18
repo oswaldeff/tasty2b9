@@ -7,7 +7,7 @@ DEBUG = False
 
 
 ALLOWED_HOSTS += [
-    
+    '.compute.amazonaws.com',
 ]
 
 
