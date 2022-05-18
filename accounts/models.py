@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinLengthValidator
 from core.models import TimeStampedModel
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
@@ -45,7 +46,7 @@ class User(TimeStampedModel, AbstractBaseUser, PermissionsMixin):
     
     id = models.AutoField(primary_key=True)
     email = models.EmailField(max_length=255, unique=True, verbose_name='이메일')
-    password = models.CharField(max_length=255, blank=True, null=True, verbose_name='비밀번호')
+    password = models.CharField(max_length=255, validators=[MinLengthValidator(4)], verbose_name='비밀번호')
     
     # default
     is_active = models.BooleanField(default=True, verbose_name='활성화')
