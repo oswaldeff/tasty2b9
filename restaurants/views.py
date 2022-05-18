@@ -27,7 +27,6 @@ def home(request: HttpRequest):
     context.update({
         'SORT': 'distance'
     })
-    q = Q()
     
     if request.GET.get('sort', ''):
         sort = request.GET.get('sort', '')
@@ -47,6 +46,7 @@ def home(request: HttpRequest):
         search_keyword = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', search_keyword)
         
         page = request.GET.get('page', '1')
+        q = Q()
         q.add(Q(sub_category__icontains=search_keyword), q.OR)
         q.add(Q(name__icontains=search_keyword), q.OR)
         
@@ -58,12 +58,14 @@ def home(request: HttpRequest):
             queryset = Restaurant \
                 .objects \
                 .filter(q) \
+                .distinct() \
                 .annotate(min_price=Subquery(sub_queryset.values('price')[:1])) \
                 .order_by(context['SORT'])
         else:
             queryset = Restaurant \
                 .objects \
                 .filter(q) \
+                .distinct() \
                 .order_by(context['SORT'])
         paginator = Paginator(queryset, 5)
         restaurants = paginator.get_page(page)
@@ -78,6 +80,7 @@ def home(request: HttpRequest):
         category = request.GET.get('category', '')
         
         page = request.GET.get('page', '1')
+        q = Q()
         q.add(Q(main_category__name=category), q.AND)
         if context['SORT'] == 'min_price':
             sub_queryset = Menu \
@@ -111,15 +114,13 @@ def home(request: HttpRequest):
 def restaurant_detail(request: HttpRequest, restaurant_id):
     template_name = 'restaurants/detail.html'
     context = get_context()
-    
-    page = request.GET.get('page', '1')
+    referer = request.META.get('HTTP_REFERER')
     restaurant = Restaurant.objects.get(id=restaurant_id)
-    queryset = Menu.objects.filter(restaurant=restaurant).order_by('id')
-    paginator = Paginator(queryset, 5)
-    menu = paginator.get_page(page)
+    menu = Menu.objects.filter(restaurant=restaurant).order_by('id')
     context.update({
         'RESTAURANT': restaurant,
-        'MENU': menu
+        'MENU': menu,
+        'REFERER': referer
     })
     
     return render(request, template_name, context)

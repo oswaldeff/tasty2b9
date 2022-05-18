@@ -1,14 +1,59 @@
 {% extends "core/base.html" %} {%block content %} {% load static %} {% load bootstrap5 %}
 <div class="layout">
-    <div class="container-fluid text-center px-5 py-3">
+    <div class="col">
+        <a 
+        class="nav-link"
+        href="{{ REFERER }}"
+        style="color: black"
+        >
+            <svg 
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+            width="40"
+            height="40"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+        </a>
+    </div>
+    <div class="container-fluid text-center px-3">
         <div>
-            <p>img</p>
+            <img
+                src="{{ RESTAURANT.img }}"
+                class="rounded float-end img-responsive"
+            />
+            <br>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="nav-col">
+            <div class="nav row">
+                <li class="nav-item col text-center t-bg-[#2AC1BC] hover:t-bg-[#5BE1DC]">
+                    <p> 지도 </p>
+                </li>
+                <li class="nav-item col text-center t-bg-[#2AC1BC] hover:t-bg-[#5BE1DC]">
+                    <p> 좋아요 </p>
+                </li>
+                <li class="nav-item col text-center t-bg-[#2AC1BC] hover:t-bg-[#5BE1DC]">
+                    <p> 공유 </p>
+                </li>
+            </div>
         </div>
         <div>
-            <p>restaurant info</p>
-        </div>
-        <div>
-            <p>menu iterater</p>
+            {% for M in MENU %}
+            <div class="py-3">
+                <li class="fs-5"> {{ M.name }} </li>
+                <li class="fs-6""> {{ M.price }} </li>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
