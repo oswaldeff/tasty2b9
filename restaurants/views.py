@@ -111,7 +111,7 @@ def home(request: HttpRequest):
     return render(request, template_name, context)
 
 
-def restaurant_detail(request: HttpRequest, restaurant_id):
+def restaurant_detail(request: HttpRequest, restaurant_id: int):
     template_name = 'restaurants/detail.html'
     context = get_context()
     referer = request.META.get('HTTP_REFERER')
