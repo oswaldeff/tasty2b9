@@ -8,6 +8,7 @@ DEBUG = False
 
 ALLOWED_HOSTS += [
     '.compute.amazonaws.com',
+    os.environ.get('AWS_PUBLIC'),
 ]
 
 
