@@ -14,10 +14,6 @@ RUN pip3 install gunicorn
 
 WORKDIR /var/www/tasty2b9
 
-RUN apt update
-
-RUN apt install npm
-
 RUN npm install
 
 RUN npm run css
