@@ -158,10 +158,10 @@ pip install -r tasty2b9/requirements/deploy.txt
     타 스크립트와 충돌이 일어나는 부분이 있어 적용되지 않은 부분입니다.
     - 음식점 이미지를 naver url로 보여주기 때문에 규격화되지 않았는데,
     s3작업이나 기타수정을 통해 사이즈 규격을 맞추어야할 부분입니다.
-    - home view에서 template에 서빙해줄 context의 사용에서 불필요한 부분들이 있는것 같
-    더욱 더 간소화하거나 직관적인 set으로 변경할 필요가 있는것 같습니다.
+    - home view에서 template에 서빙해줄 context의 사용에서 반복되는 부분들이나
+    template사용에 직접적으로 불필요한 부분들은 직관적인 set으로 변경할 필요가 있는것 같습니다.
     - 정렬시 발생되는 추가 쿼리셋에 대해 살펴보았을때, 중복되는 부분은 발견하지 못하였지만,
     pagination시 음식점 이름이 유니크한 값임에도 중복되는 음식점이 발견되었습니다.
 - Try:
     - 중복되는 음식점에 대하여 가격순 정렬의 queryset에 문제가 있는것으로 생각되어
-    질의되는 queryset들을 살펴보며 debugging중에 있습니다. 
+    질의되는 query들을 살펴보며 debugging중에 있습니다. 
