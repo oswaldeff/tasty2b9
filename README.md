@@ -164,4 +164,10 @@ pip install -r tasty2b9/requirements/deploy.txt
     pagination시 음식점 이름이 유니크한 값임에도 중복되는 음식점이 발견되었습니다.
 - Try:
     - 중복되는 음식점에 대하여 가격순 정렬의 queryset에 문제가 있는것으로 생각되어
-    질의되는 query들을 살펴보며 debugging중에 있습니다. 
+    질의되는 query들을 살펴보며 debugging중에 있습니다.
+    → (해결) paginator에 인자로 들어가는 queryset에서 order_by사용시,
+    paginator이후 각 페이지에서 질의하는 데이터들은
+    정렬 기준이 되는 동일 데이터값에 의해 랜덤하게 사용되기 때문에
+    order_by에 추가로 unique필드값을 넣어줘야 하는것으로 확인했습니다.
+    ('queryset to become randomly ordered when using paginator',
+    reference: https://github.com/encode/django-rest-framework/issues/6886)
