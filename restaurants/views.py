@@ -53,6 +53,7 @@ def home(request: HttpRequest):
             sub_queryset = Menu \
                 .objects \
                 .filter(restaurant=OuterRef('id')) \
+                .distinct() \
                 .order_by('price')
             queryset = Restaurant \
                 .objects \
@@ -85,11 +86,13 @@ def home(request: HttpRequest):
             sub_queryset = Menu \
                 .objects \
                 .filter(restaurant=OuterRef('id')) \
+                .distinct() \
                 .order_by('price')
             queryset = Restaurant \
                 .objects \
                 .select_related('main_category') \
                 .filter(q) \
+                .distinct() \
                 .annotate(min_price=Subquery(sub_queryset.values('price')[:1])) \
                 .order_by(context['SORT'])
         else:
@@ -97,6 +100,7 @@ def home(request: HttpRequest):
                 .objects \
                 .select_related('main_category') \
                 .filter(q) \
+                .distinct() \
                 .order_by(context['SORT'])
         paginator = Paginator(queryset, 5)
         restaurants = paginator.get_page(page)
