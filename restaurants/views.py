@@ -90,7 +90,7 @@ def home(request: HttpRequest):
                 .select_related('main_category') \
                 .filter(q) \
                 .annotate(min_price=Subquery(sub_queryset.values('price')[:1])) \
-                .order_by(context['SORT'])
+                .order_by(context['SORT'], 'id')
         else:
             queryset = Restaurant \
                 .objects \
